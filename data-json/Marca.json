@@ -1,0 +1,34 @@
+[
+    {
+        "BRAND":"ACG",
+        "id_BRAND":1
+    },
+    {
+        "BRAND":"Jordan",
+        "id_BRAND":2
+    },
+    {
+        "BRAND":"Nike",
+        "id_BRAND":3
+    },
+    {
+        "BRAND":"Nike Pro",
+        "id_BRAND":4
+    },
+    {
+        "BRAND":"Nike Sportswear",
+        "id_BRAND":5
+    },
+    {
+        "BRAND":"NIKEiD",
+        "id_BRAND":6
+    },
+    {
+        "BRAND":"NikeLab",
+        "id_BRAND":7
+    },
+    {
+        "BRAND":"No record",
+        "id_BRAND":8
+    }
+]

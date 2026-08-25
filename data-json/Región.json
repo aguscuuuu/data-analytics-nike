@@ -1,0 +1,22 @@
+[
+    {
+        "id_Region":1,
+        "Region":"Northeast"
+    },
+    {
+        "id_Region":2,
+        "Region":"South"
+    },
+    {
+        "id_Region":3,
+        "Region":"West"
+    },
+    {
+        "id_Region":4,
+        "Region":"Midwest"
+    },
+    {
+        "id_Region":5,
+        "Region":"Southeast"
+    }
+]

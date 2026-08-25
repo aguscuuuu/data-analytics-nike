@@ -1,0 +1,118 @@
+[
+    {
+        "SUBCATEGORY":"All Accessories and Equipment",
+        "id_SubCategory":1
+    },
+    {
+        "SUBCATEGORY":"All Clothing",
+        "id_SubCategory":2
+    },
+    {
+        "SUBCATEGORY":"All Shoes",
+        "id_SubCategory":3
+    },
+    {
+        "SUBCATEGORY":"Bags and Backpacks",
+        "id_SubCategory":4
+    },
+    {
+        "SUBCATEGORY":"Basketball",
+        "id_SubCategory":5
+    },
+    {
+        "SUBCATEGORY":"Football",
+        "id_SubCategory":6
+    },
+    {
+        "SUBCATEGORY":"Hats",
+        "id_SubCategory":7
+    },
+    {
+        "SUBCATEGORY":"Hoodies and Sweatshirts",
+        "id_SubCategory":8
+    },
+    {
+        "SUBCATEGORY":"Jackets",
+        "id_SubCategory":9
+    },
+    {
+        "SUBCATEGORY":"Jordan",
+        "id_SubCategory":10
+    },
+    {
+        "SUBCATEGORY":"Kits and Jerseys",
+        "id_SubCategory":11
+    },
+    {
+        "SUBCATEGORY":"Leggings",
+        "id_SubCategory":12
+    },
+    {
+        "SUBCATEGORY":"Lifestyle",
+        "id_SubCategory":13
+    },
+    {
+        "SUBCATEGORY":"Matching Sets",
+        "id_SubCategory":14
+    },
+    {
+        "SUBCATEGORY":"Nike By You",
+        "id_SubCategory":15
+    },
+    {
+        "SUBCATEGORY":"Running",
+        "id_SubCategory":16
+    },
+    {
+        "SUBCATEGORY":"Shorts",
+        "id_SubCategory":17
+    },
+    {
+        "SUBCATEGORY":"Skateboarding",
+        "id_SubCategory":18
+    },
+    {
+        "SUBCATEGORY":"Skirts and Dresses",
+        "id_SubCategory":19
+    },
+    {
+        "SUBCATEGORY":"Socks",
+        "id_SubCategory":20
+    },
+    {
+        "SUBCATEGORY":"Sport Clothing",
+        "id_SubCategory":21
+    },
+    {
+        "SUBCATEGORY":"Sports Bras",
+        "id_SubCategory":22
+    },
+    {
+        "SUBCATEGORY":"Swimwear",
+        "id_SubCategory":23
+    },
+    {
+        "SUBCATEGORY":"Tops and T-Shirts",
+        "id_SubCategory":24
+    },
+    {
+        "SUBCATEGORY":"Tracksuits",
+        "id_SubCategory":25
+    },
+    {
+        "SUBCATEGORY":"Training and Gym",
+        "id_SubCategory":26
+    },
+    {
+        "SUBCATEGORY":"Trousers",
+        "id_SubCategory":27
+    },
+    {
+        "SUBCATEGORY":"Trousers and Leggings",
+        "id_SubCategory":28
+    },
+    {
+        "SUBCATEGORY":"Trousers and Tights",
+        "id_SubCategory":29
+    }
+]

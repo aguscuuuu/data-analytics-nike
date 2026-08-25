@@ -1,0 +1,18 @@
+[
+    {
+        "PRODUCT_TYPE":"ACCESSORIES",
+        "id_PRODUCT_TYPE":1
+    },
+    {
+        "PRODUCT_TYPE":"APPAREL",
+        "id_PRODUCT_TYPE":2
+    },
+    {
+        "PRODUCT_TYPE":"EQUIPMENT",
+        "id_PRODUCT_TYPE":3
+    },
+    {
+        "PRODUCT_TYPE":"FOOTWEAR",
+        "id_PRODUCT_TYPE":4
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "AVAILABILITY":"COMING_SOON",
+        "id_AVAILABILITY":1
+    },
+    {
+        "AVAILABILITY":"IN_STOCK",
+        "id_AVAILABILITY":2
+    },
+    {
+        "AVAILABILITY":"SOLD_OUT",
+        "id_AVAILABILITY":3
+    }
+]

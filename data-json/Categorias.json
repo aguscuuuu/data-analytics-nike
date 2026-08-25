@@ -1,0 +1,14 @@
+[
+    {
+        "CATEGORY":"Accessories and Equipment",
+        "id_Category":1
+    },
+    {
+        "CATEGORY":"Clothing",
+        "id_Category":2
+    },
+    {
+        "CATEGORY":"Shoes",
+        "id_Category":3
+    }
+]

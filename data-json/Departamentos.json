@@ -1,0 +1,14 @@
+[
+    {
+        "DEPARTMENT":"Kids",
+        "id_DEPARTMENT":1
+    },
+    {
+        "DEPARTMENT":"Men",
+        "id_DEPARTMENT":2
+    },
+    {
+        "DEPARTMENT":"Women",
+        "id_DEPARTMENT":3
+    }
+]
