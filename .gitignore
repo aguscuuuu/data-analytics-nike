@@ -1,3 +1,1 @@
-# Dataset crudo: 114 MB, supera el limite de 100 MB por archivo de GitHub.
-# Se mantiene solo en local. Si hace falta compartirlo, usar Drive/S3 o Git LFS.
 data-json/ventas_nike.json
