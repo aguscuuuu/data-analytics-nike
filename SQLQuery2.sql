@@ -1,5 +1,10 @@
 ﻿-- cargar los registros de cada Tabla 
 
+-- poner en uso la base de datos 
+
+USE BD_Nike;
+GO
+
 -- DimCategory
 DECLARE @json NVARCHAR(MAX);
 

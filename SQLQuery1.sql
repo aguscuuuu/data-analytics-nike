@@ -1,13 +1,11 @@
 -- crear base de datos 
    
 CREATE DATABASE BD_Nike;
-
 GO
 
 -- poner en uso la base de datos 
 
 USE BD_Nike;
-
 GO
 
 -- crear las tablas de dimensión 
