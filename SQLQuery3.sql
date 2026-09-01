@@ -131,6 +131,7 @@ a 0.80 Medio, igual o mayor a 0.80 Alto */
 
 
 
+
 -- OPERADORES ARITMÉTICOS -----------------------------------------------------------------------------------
 
 /* SUMA (+)
@@ -161,9 +162,11 @@ resultado con 2 decimales. */
 
 
 
+
 /* CAST
 Convertir un valor de un tipo de dato a otro. En este caso, transformar un resultado decimal en 
 entero. */
+
 
 
 
@@ -177,23 +180,29 @@ como texto formateado con decimales. */
 
 
 
+
 -- ORDENAMIENTO Y SELECCIÓN ---------------------------------------------------------------------------------
 
 /* ORDER BY
 Ordenar los resultados de una consulta según una columna específica. En este caso, mostrar las tallas 
 ordenadas por unidades vendidas de mayor a menor. */
 
-
-
-
+SELECT
+	PRODUCT_SIZE AS Tallas,
+	UnitsSold AS UnidadesVendidas
+FROM dbo.FactNikeSales
+WHERE PRODUCT_SIZE IN ('S','M','L')
+ORDER BY UnitsSold DESC;
 
 /* TOP
 Limitar la cantidad de registros devueltos por la consulta. En este ejemplo, mostrar solo las 5 tallas 
 con mayor precio unitario. */
 
-
-
-
+SELECT TOP 5
+	PRODUCT_SIZE AS Tallas,
+	PricePerUnit AS Precio
+FROM dbo.FactNikeSales
+ORDER BY PricePerUnit DESC;
 
 -- AGRUPACIÓN Y FILTROS SOBRE AGREGADOS ---------------------------------------------------------------------
 
@@ -202,13 +211,22 @@ Agrupar los registros que comparten un mismo valor para resumir la información 
 reunir los datos por talle para analizar sus ventas. (AGREGACIÓN Aplicar funciones como SUM, COUNT, AVG, MIN 
 o MAX sobre cada grupo generado en la consulta). */
 
-
-
-
-
+SELECT
+	id_PRODUCT_NAME AS Producto,
+	SUM(UnitsSold) AS Total_Vendido
+FROM dbo.FactNikeSales
+WHERE PRODUCT_SIZE = 'M'
+GROUP BY id_PRODUCT_NAME;
 
 /* HAVING
 Filtrar los resultados después de haber realizado la agrupación. A diferencia de WHERE, HAVING se utiliza 
 sobre  resultados agregados. En este ejemplo, mostrar solo los grupos que cumplan una condición sobre el 
 total calculado. */
 
+SELECT
+	id_PRODUCT_NAME AS Producto,
+	SUM(UnitsSold) AS Total_Vendido
+FROM dbo.FactNikeSales
+WHERE PRODUCT_SIZE = 'M'
+GROUP BY id_PRODUCT_NAME
+HAVING SUM(UnitsSold) >800;
