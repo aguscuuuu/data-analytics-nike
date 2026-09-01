@@ -7,6 +7,11 @@ salidas a partir de operadores y funciones.
 El objetivo es que practiquen cómo recuperar información útil, aplicando distintos criterios 
 de búsqueda, comparación y transformación de datos. */
 
+-- Poner en uso la base de datos 
+
+USE BD_Nike;
+GO
+
 -- OPERADORES RELACIONALES ----------------------------------------------------------------------------------
 
 /* MENOR QUE (<)
@@ -127,10 +132,15 @@ Clasificar registros que se encuentren dentro de un rango numérico y correspond
 XS, M o L. En este caso, productos con margen operativo inferior a 0.40 = Bajo, entre 0.41 y menor 
 a 0.80 Medio, igual o mayor a 0.80 Alto */
 
-
-
-
-
+SELECT
+	id_PRODUCT_NAME id,
+	OperatingMargin AS MargenOperativo,
+	CASE
+		WHEN OperatingMargin < 0.40 THEN 'Bajo'
+		WHEN OperatingMargin < 0.80 THEN 'Medio'
+	ELSE 'Alto' END AS TipoMargenOperativo
+FROM dbo.FactNikeSales
+WHERE PRODUCT_SIZE IN ('XS','M','L');
 
 -- OPERADORES ARITMÉTICOS -----------------------------------------------------------------------------------
 
@@ -158,28 +168,35 @@ FROM dbo.FactNikeSales;
 Redondear un valor numérico a una cantidad específica de decimales. En este ejemplo, mostrar el 
 resultado con 2 decimales. */
 
-
-
-
-
+SELECT 
+	id_PRODUCT_NAME, 
+    ROUND(PricePerUnit / NULLIF(UnitsSold, 0),2) AS PrecioPromedio
+FROM dbo.FactNikeSales;
 
 /* CAST
 Convertir un valor de un tipo de dato a otro. En este caso, transformar un resultado decimal en 
 entero. */
 
+-- Como entero, no nos sirve.
+SELECT 
+	id_PRODUCT_NAME, 
+    CAST(PricePerUnit / NULLIF(UnitsSold, 0)AS INT) AS PrecioPromedio
+FROM dbo.FactNikeSales;
 
-
-
-
+-- Como decimal, ¡ahora sí!
+SELECT 
+	id_PRODUCT_NAME, 
+    CAST(PricePerUnit / NULLIF(UnitsSold, 0)AS DECIMAL(10,2)) AS PrecioPromedio
+FROM dbo.FactNikeSales;
 
 /* FORMAT
 Convertir un número en texto con un formato visual específico. En este ejemplo, mostrar el valor 
 como texto formateado con decimales. */
 
-
-
-
-
+SELECT 
+	id_PRODUCT_NAME, 
+    '$ '+ FORMAT(PricePerUnit / NULLIF(UnitsSold, 0),'N2') + '.-' AS PrecioPromedio
+FROM dbo.FactNikeSales;
 
 -- ORDENAMIENTO Y SELECCIÓN ---------------------------------------------------------------------------------
 
