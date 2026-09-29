@@ -1,0 +1,236 @@
+table Fact_Nike_Ventas
+	lineageTag: fb0d1f07-2bb4-4d78-9324-ad2ebafea14a
+
+	column fecha_factura
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 413d8ec8-1fe7-4f60-9e9e-400880c438a7
+		summarizeBy: none
+		sourceColumn: fecha_factura
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column id_region
+		dataType: int64
+		formatString: 0
+		lineageTag: 45dfb89b-aa25-4f28-9779-3ea8fc2169e2
+		summarizeBy: none
+		sourceColumn: id_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_estado
+		dataType: int64
+		formatString: 0
+		lineageTag: ae5313b5-081b-44cf-9958-41cec3959582
+		summarizeBy: none
+		sourceColumn: id_estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_ciudad
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c2ad33d-38ac-472f-92e7-d8c01f6d6ab7
+		summarizeBy: none
+		sourceColumn: id_ciudad
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_departamento
+		dataType: int64
+		formatString: 0
+		lineageTag: ea402531-ac12-47c3-94cf-a976b1aaacfe
+		summarizeBy: none
+		sourceColumn: id_departamento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_categoria
+		dataType: int64
+		formatString: 0
+		lineageTag: d67ab25f-9f1e-4119-a604-6499c09a18f5
+		summarizeBy: none
+		sourceColumn: id_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_subcategoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b60cc05-1994-4edd-afee-bcc43e73ca05
+		summarizeBy: none
+		sourceColumn: id_subcategoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_nombre_producto
+		dataType: int64
+		formatString: 0
+		lineageTag: 1152176f-fb1b-4039-b360-7db324e96b94
+		summarizeBy: none
+		sourceColumn: id_nombre_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_descripcion
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c3565f8-c0a2-46f9-b066-8b64877c3b73
+		summarizeBy: none
+		sourceColumn: id_descripcion
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_tipo_producto
+		dataType: int64
+		formatString: 0
+		lineageTag: df50cf5d-0b22-4a0c-87f8-560497296cb6
+		summarizeBy: none
+		sourceColumn: id_tipo_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column tamaño_producto
+		dataType: string
+		lineageTag: 03812f16-3296-46e2-833c-3616db8ad874
+		summarizeBy: none
+		sourceColumn: tamaño_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_color
+		dataType: int64
+		formatString: 0
+		lineageTag: 808c31b6-164c-42c3-9ad4-1ba7059a3b3e
+		summarizeBy: none
+		sourceColumn: id_color
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_marca
+		dataType: int64
+		formatString: 0
+		lineageTag: c4b973a4-fe66-4e6d-b5a8-28e1bde3cb3c
+		summarizeBy: none
+		sourceColumn: id_marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_disponibilidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b0b701e-21ea-42f7-a97d-edc176f80bef
+		summarizeBy: none
+		sourceColumn: id_disponibilidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column precio_por_unidad
+		dataType: double
+		lineageTag: 8d292cb6-b3c9-48c3-aebd-604a0dad41e9
+		summarizeBy: sum
+		sourceColumn: precio_por_unidad
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unidades_vendidas
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bfd0898-f47d-4d51-a319-8af93be829cc
+		summarizeBy: sum
+		sourceColumn: unidades_vendidas
+
+		annotation SummarizationSetBy = Automatic
+
+	column costo_por_unidad
+		dataType: double
+		lineageTag: 1ea59ad2-0480-4945-9567-925206d90814
+		summarizeBy: sum
+		sourceColumn: costo_por_unidad
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margen_operativo
+		dataType: double
+		lineageTag: 59ead41b-1107-4156-b0b1-768110cc0f2f
+		summarizeBy: sum
+		sourceColumn: margen_operativo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_vendido = Fact_Nike_Ventas[precio_por_unidad] * Fact_Nike_Ventas[unidades_vendidas]
+		lineageTag: 198c0ad7-1dfe-4940-8f9f-a7e5b78a81bf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column id_venta
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e813bcf-4b8e-43a6-82f0-ed3996f1ed49
+		summarizeBy: sum
+		sourceColumn: id_venta
+
+		annotation SummarizationSetBy = Automatic
+
+	column costo_total = Fact_Nike_Ventas[unidades_vendidas] * Fact_Nike_Ventas[costo_por_unidad]
+		lineageTag: 789ce58f-531e-44a2-b28f-6a2e1a1d8cb9
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column beneficio = Fact_Nike_Ventas[total_vendido] - Fact_Nike_Ventas[costo_total]
+		lineageTag: c84127d1-41f0-4e7b-9bef-1813f7a38bbf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margen_evaluado = ```
+			SWITCH(TRUE(),
+			    'Fact_Nike_Ventas'[margen_operativo] < 0.4, "Margen Bajo",
+			    'Fact_Nike_Ventas'[margen_operativo] <= 0.5, "Margen Medio",
+			    "Margen Alto"
+			)
+			
+			```
+		lineageTag: e41d98e0-4a22-4a97-a2db-fe04c3eb46f1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Nike_Ventas = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Nike_Ventas", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"INVOICE DATE", type date}, {"id_Region", Int64.Type}, {"id_State", Int64.Type}, {"id_City", Int64.Type}, {"id_Department", Int64.Type}, {"id_Category", Int64.Type}, {"id_SubCategory", Int64.Type}, {"id_PRODUCT_NAME", Int64.Type}, {"id_DESCRIPTION", Int64.Type}, {"id_PRODUCT_TYPE", Int64.Type}, {"PRODUCT_SIZE", type text}, {"id_Color", Int64.Type}, {"id_BRAND", Int64.Type}, {"id_AVAILABILITY", Int64.Type}, {"Price per Unit", type number}, {"Units Sold", Int64.Type}, {"Costo Unitario", type number}, {"Operating Margin", type number}}, "es"),
+				  #"Columnas con nombre cambiado Fernandito" = Table.RenameColumns(#"Tipo de columna cambiado",{{"Costo Unitario", "costo_por_unidad"}, {"INVOICE DATE", "fecha_factura"}, {"id_Region", "id_region"}, {"id_State", "id_estado"}, {"id_City", "id_ciudad"}, {"id_Department", "id_departamento"}, {"id_Category", "id_categoria"}, {"id_SubCategory", "id_subcategoria"}, {"id_PRODUCT_NAME", "id_nombre_producto"}, {"id_DESCRIPTION", "id_descripcion"}, {"id_PRODUCT_TYPE", "id_tipo_producto"}, {"PRODUCT_SIZE", "tamaño_producto"}, {"id_Color", "id_color"}, {"id_BRAND", "id_marca"}, {"id_AVAILABILITY", "id_disponibilidad"}, {"Price per Unit", "precio_por_unidad"}, {"Units Sold", "unidades_vendidas"}, {"Operating Margin", "margen_operativo"}}),
+				    #"Índice agregado" = Table.AddIndexColumn(#"Columnas con nombre cambiado Fernandito", "Índice", 1, 1, Int64.Type),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Índice agregado",{{"Índice", "id_venta"}}),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Columnas con nombre cambiado",{"id_venta", "fecha_factura", "id_region", "id_estado", "id_ciudad", "id_departamento", "id_categoria", "id_subcategoria", "id_nombre_producto", "id_descripcion", "id_tipo_producto", "tamaño_producto", "id_color", "id_marca", "id_disponibilidad", "precio_por_unidad", "unidades_vendidas", "costo_por_unidad", "margen_operativo"})
+				in
+				    #"Columnas reordenadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

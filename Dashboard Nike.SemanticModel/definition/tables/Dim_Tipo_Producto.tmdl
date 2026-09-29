@@ -1,0 +1,44 @@
+table Dim_Tipo_Producto
+	lineageTag: e249ca97-870c-4b0e-b0e0-3bcfccf56f81
+
+	column tipo_de_producto
+		dataType: string
+		lineageTag: cb71f3ea-a00e-4d79-9b7b-ae9e20394a2e
+		summarizeBy: none
+		sourceColumn: tipo_de_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_tipo_de_producto
+		dataType: int64
+		formatString: 0
+		lineageTag: f7694353-e181-42cb-92f7-3815ee163e1d
+		summarizeBy: none
+		sourceColumn: id_tipo_de_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Tipo_Producto = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Tipo_Producto", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"PRODUCT_TYPE", type text}, {"id_PRODUCT_TYPE", Int64.Type}}, "es"),
+				    #"Filas en blanco eliminadas" = Table.SelectRows(#"Tipo de columna cambiado", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Filas en blanco eliminadas",{"id_PRODUCT_TYPE", "PRODUCT_TYPE"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas reordenadas",{{"id_PRODUCT_TYPE", "id_tipo_de_producto"}, {"PRODUCT_TYPE", "tipo_de_producto"}}),
+				    #"Valor reemplazado" = Table.ReplaceValue(#"Columnas con nombre cambiado","ACCESSORIES","Accessories",Replacer.ReplaceText,{"tipo_de_producto"}),
+				    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado","APPAREL","Apparel",Replacer.ReplaceText,{"tipo_de_producto"}),
+				    #"Valor reemplazado2" = Table.ReplaceValue(#"Valor reemplazado1","EQUIPMENT","Equipment",Replacer.ReplaceText,{"tipo_de_producto"}),
+				    #"Valor reemplazado3" = Table.ReplaceValue(#"Valor reemplazado2","FOOTWEAR","Footwear",Replacer.ReplaceText,{"tipo_de_producto"})
+				in
+				  #"Valor reemplazado3"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

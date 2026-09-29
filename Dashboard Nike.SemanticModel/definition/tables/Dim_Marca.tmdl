@@ -1,0 +1,40 @@
+table Dim_Marca
+	lineageTag: 31cd9bac-efc1-4109-b1ed-77bc073300c9
+
+	column marca
+		dataType: string
+		lineageTag: 7c5ce5f9-b0f0-403b-a4a0-f6b4bba1f3ae
+		summarizeBy: none
+		sourceColumn: marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_marca
+		dataType: int64
+		formatString: 0
+		lineageTag: c73054a7-9a72-4190-8c5f-592ed5e753ed
+		summarizeBy: none
+		sourceColumn: id_marca
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Marca = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Marca", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"BRAND", type text}, {"id_BRAND", Int64.Type}}, "es"),
+				    #"Filas en blanco eliminadas" = Table.SelectRows(#"Tipo de columna cambiado", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Filas en blanco eliminadas",{"id_BRAND", "BRAND"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas reordenadas",{{"id_BRAND", "id_marca"}, {"BRAND", "marca"}})
+				in
+				  #"Columnas con nombre cambiado"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

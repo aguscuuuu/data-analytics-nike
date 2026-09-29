@@ -1,0 +1,40 @@
+table Dim_Subcategoria
+	lineageTag: f5636820-bb0d-4ec2-963e-bc8c15243df7
+
+	column subcategoria
+		dataType: string
+		lineageTag: 413d9e30-07e7-413f-9fc6-ac39cb4a37ac
+		summarizeBy: none
+		sourceColumn: subcategoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_subcategoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 7dc624c1-b47a-4548-99d9-88db642b9431
+		summarizeBy: none
+		sourceColumn: id_subcategoria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Subcategoria = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Sub_Categoría", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"SUBCATEGORY", type text}, {"id_SubCategory", Int64.Type}}, "es"),
+				    #"Filas en blanco eliminadas" = Table.SelectRows(#"Tipo de columna cambiado", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Filas en blanco eliminadas",{"id_SubCategory", "SUBCATEGORY"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas reordenadas",{{"id_SubCategory", "id_subcategoria"}, {"SUBCATEGORY", "subcategoria"}})
+				in
+				  #"Columnas con nombre cambiado"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

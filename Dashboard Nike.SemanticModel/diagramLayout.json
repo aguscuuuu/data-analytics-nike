@@ -1,0 +1,226 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 366.66666666666669,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1678.654612532406,
+            "y": 325.58758949553453
+          },
+          "nodeIndex": "Tabla Calendario",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 1306.654612532406,
+            "y": 181.96171796280339
+          },
+          "nodeIndex": "Dim_Campaña",
+          "size": {
+            "height": 152,
+            "width": 322
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 906.654612532406,
+            "y": 481.17517899106906
+          },
+          "nodeIndex": "Dim_Categoria",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1220.654612532406,
+            "y": 397.17517899106906
+          },
+          "nodeIndex": "Dim_Ciudad",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 317.00424048829478
+          },
+          "nodeIndex": "Dim_Color",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 578.654612532406,
+            "y": 723.17517899106906
+          },
+          "nodeIndex": "Dim_Departamento",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 219.96606982572825,
+            "y": 720.35035798213812
+          },
+          "nodeIndex": "Dim_Descripcion",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 926.65461253240574,
+            "y": 721.17517899106906
+          },
+          "nodeIndex": "Dim_Disponibilidad",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 40
+          },
+          "nodeIndex": "Dim_Estado",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 895.2260411038344,
+            "y": 0
+          },
+          "nodeIndex": "Dim_Marca",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 934.43441603002725,
+            "y": 222.16763321016106
+          },
+          "nodeIndex": "Dim_Nombre_Producto",
+          "size": {
+            "height": 145,
+            "width": 274
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1222.6546125324057,
+            "y": 633.17517899106906
+          },
+          "nodeIndex": "Dim_Region",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1230.0831839609771,
+            "y": 0
+          },
+          "nodeIndex": "Dim_Subcategoria",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 295.92455553471814,
+            "y": 6
+          },
+          "nodeIndex": "Dim_Sucursal_Estado",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 616.94032681812007,
+            "y": 0
+          },
+          "nodeIndex": "Dim_Tipo_Producto",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 535.88320657814131,
+            "y": 221.5148004302057
+          },
+          "nodeIndex": "Fact_Nike_Ventas",
+          "size": {
+            "height": 402,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1689.3212791990725,
+            "y": 45.5875894955345
+          },
+          "nodeIndex": "Tabla Medidas",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

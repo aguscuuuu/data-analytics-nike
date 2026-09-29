@@ -1,0 +1,47 @@
+table Dim_Campaña
+	lineageTag: 76f1ebd2-e040-4b37-aeed-1d9ba84f67bc
+
+	column id_campaña
+		dataType: int64
+		formatString: 0
+		lineageTag: efaa1a93-3d4a-45b3-a346-5d76a25f409f
+		summarizeBy: sum
+		sourceColumn: id_campaña
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaña
+		dataType: string
+		lineageTag: cc20b423-a6c1-4ec3-b6c9-d0fd3023e9f2
+		summarizeBy: none
+		sourceColumn: campaña
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_nombre_de_producto
+		dataType: int64
+		formatString: 0
+		lineageTag: 101c4e1f-ea5c-4892-a228-a78909745149
+		summarizeBy: none
+		sourceColumn: id_nombre_de_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Campaña = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "Campaña.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Campañas", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"id_Campaign", Int64.Type}, {"Campaign", type text}, {"id_PRODUCT_NAME", Int64.Type}}, "es"),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo de columna cambiado",{{"id_Campaign", "id_campaña"}, {"Campaign", "campaña"}, {"id_PRODUCT_NAME", "id_nombre_de_producto"}})
+				in
+				  #"Columnas con nombre cambiado"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

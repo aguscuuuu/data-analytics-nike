@@ -1,0 +1,39 @@
+table Dim_Estado
+	lineageTag: 407b9177-d116-44fb-9517-d6c8726234c4
+
+	column id_estado
+		dataType: int64
+		formatString: 0
+		lineageTag: ad963686-1234-49df-bb7e-4056a8bc5d99
+		summarizeBy: none
+		sourceColumn: id_estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column estado
+		dataType: string
+		lineageTag: 9b11d134-6dcd-44ae-918c-3623d279474b
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Estado = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Estado", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"id_State", Int64.Type}, {"State", type text}}, "es"),
+				    #"Filas en blanco eliminadas" = Table.SelectRows(#"Tipo de columna cambiado", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Filas en blanco eliminadas",{{"id_State", "id_estado"}, {"State", "estado"}})
+				in
+				  #"Columnas con nombre cambiado"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

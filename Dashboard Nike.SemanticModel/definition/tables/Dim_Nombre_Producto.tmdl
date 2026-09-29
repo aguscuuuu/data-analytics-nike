@@ -1,0 +1,40 @@
+table Dim_Nombre_Producto
+	lineageTag: 70ace08a-5a8d-460c-b11a-b584b7f269ab
+
+	column nombre_de_producto
+		dataType: string
+		lineageTag: d6784242-252e-4102-b727-0dda66718815
+		summarizeBy: none
+		sourceColumn: nombre_de_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_nombre_de_producto
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e802937-25c9-47cc-bd75-2e48a65e4d7d
+		summarizeBy: none
+		sourceColumn: id_nombre_de_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Nombre_Producto = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Nombre_Producto", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"PRODUCT_NAME", type text}, {"id_PRODUCT_NAME", Int64.Type}}, "es"),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo de columna cambiado",{{"PRODUCT_NAME", "nombre_de_producto"}}),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Columnas con nombre cambiado",{"id_PRODUCT_NAME", "nombre_de_producto"}),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Columnas reordenadas",{{"id_PRODUCT_NAME", "id_nombre_de_producto"}})
+				in
+				  #"Columnas con nombre cambiado1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

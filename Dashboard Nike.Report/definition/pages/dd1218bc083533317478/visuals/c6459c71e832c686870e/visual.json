@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "c6459c71e832c686870e",
+  "position": {
+    "x": 217.36672130349405,
+    "y": 265.22728379233678,
+    "z": 3002,
+    "height": 442.71020302179522,
+    "width": 1118.7406481766986,
+    "tabOrder": 3002
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tabla Calendario"
+                    }
+                  },
+                  "Property": "nombre_corto_mes"
+                }
+              },
+              "queryRef": "Tabla Calendario.nombre_corto_mes",
+              "nativeQueryRef": "nombre_corto_mes",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Tabla Medidas"
+                    }
+                  },
+                  "Property": "Facturación total"
+                }
+              },
+              "queryRef": "Tabla Medidas.Facturación total",
+              "nativeQueryRef": "Facturación total"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

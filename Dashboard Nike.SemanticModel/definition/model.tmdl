@@ -1,0 +1,37 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-AR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["RutaMaterial","Fact_Nike_Ventas","Dim_Departamento","Dim_Estado","Dim_Ciudad","Dim_Region","Dim_Categoria","Dim_Nombre_Producto","Dim_Subcategoria","Dim_Descripcion","Dim_Tipo_Producto","Dim_Color","Dim_Marca","Dim_Disponibilidad","Dim_Campaña","Dim_Sucursal_Estado"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Fact_Nike_Ventas
+ref table Dim_Departamento
+ref table Dim_Estado
+ref table Dim_Ciudad
+ref table Dim_Region
+ref table Dim_Categoria
+ref table Dim_Nombre_Producto
+ref table Dim_Subcategoria
+ref table Dim_Descripcion
+ref table Dim_Tipo_Producto
+ref table Dim_Color
+ref table Dim_Marca
+ref table Dim_Disponibilidad
+ref table Dim_Campaña
+ref table Dim_Sucursal_Estado
+ref table 'Tabla Calendario'
+ref table 'Tabla Medidas'
+ref table DateTableTemplate_c7e189b4-1c1d-469e-8369-6d81ab06246d
+ref table LocalDateTable_bdabee80-3114-43c9-82bc-3ccd311dea40
+
+ref cultureInfo es-ES
+

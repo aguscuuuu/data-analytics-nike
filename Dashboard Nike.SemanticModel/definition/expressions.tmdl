@@ -1,0 +1,5 @@
+expression RutaMaterial = "C:\Users\MD-65732\Documents\repositories\data-analytics-nike\Material de Práctica\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 308f0478-1e85-4509-b473-719c8e4ba9d4
+
+	annotation PBI_ResultType = Text
+

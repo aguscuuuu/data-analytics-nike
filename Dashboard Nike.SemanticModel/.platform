@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Dashboard Nike"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d4d15538-8d8c-48e4-a5c4-141a5547e2b0"
+  }
+}

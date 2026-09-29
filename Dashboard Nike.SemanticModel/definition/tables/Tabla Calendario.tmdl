@@ -1,0 +1,142 @@
+table 'Tabla Calendario'
+	lineageTag: 5c441e17-49c0-4abe-841e-433379834ab0
+
+	column Date
+		formatString: Short Date
+		lineageTag: 224e192a-5ef1-4838-9732-5085321ddd95
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variación
+			isDefault
+			relationship: aaa58713-a3cf-48b7-90c5-4fdcbd731ba2
+			defaultHierarchy: LocalDateTable_bdabee80-3114-43c9-82bc-3ccd311dea40.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column año
+		formatString: 0
+		lineageTag: ee38f65e-86fc-4f71-9007-99849e1ea60a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Año]
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		lineageTag: 93e85a45-0e39-4cde-a42f-94415a7da8dd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo
+		lineageTag: 01d9f772-6b2b-46f9-b50e-a054df6aeccd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Periodo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo2
+		lineageTag: b255a46c-b601-4c31-852b-3b8d885c6ff6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Periodo2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column cuatrimestre
+		lineageTag: 2f6da94e-c5e8-45ed-9fd9-908427a35832
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Cuatrimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_fecha
+		lineageTag: d6bccafb-708e-449e-8fd8-3a8bd0c82466
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [id_fecha]
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_corto_mes
+		lineageTag: e7b2410e-8eb4-4412-a161-e447c07d1418
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [nombre_corto_mes]
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_mes
+		lineageTag: eed56f4a-2cb9-422a-832f-b9076ad5b81b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [nombre_mes]
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana_numero
+		formatString: 0
+		lineageTag: 6dc857af-51db-4e96-86d2-547363f146ac
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [dia_semana_numero]
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		lineageTag: 32796837-201c-45a8-b748-6b7144a85abc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [dia_semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana_corto
+		lineageTag: e9f6d9c3-6c6f-4575-a544-69ce12135d1d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [dia_semana_corto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column año_cuatrimestre
+		lineageTag: 3cb169f2-7f23-47f2-995d-604bab7d7b4c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [año_cuatrimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tabla Calendario' = calculated
+		mode: import
+		source =
+				ADDCOLUMNS (
+				        CALENDAR (
+				            MIN('Fact_Nike_Ventas'[fecha_factura]),
+				            MAX('Fact_Nike_Ventas'[fecha_factura])
+				        ),
+				        "id_fecha", FORMAT ( [Date], "YYYYMMDD" ),
+				        "año", YEAR ( [Date] ),
+				        "mes", FORMAT ( [Date], "MM" ),
+				        "periodo", FORMAT ( [Date], "YYYY/MM" ),
+				        "periodo2", FORMAT ( [Date], "YYYY/mmm" ),
+				        "nombre_corto_mes", FORMAT ( [Date], "mmm" ),
+				        "nombre_mes", FORMAT ( [Date], "mmmm" ),
+				        "dia_semana_numero", WEEKDAY ( [Date] ),
+				        "dia_semana", FORMAT ( [Date], "dddd" ),
+				        "dia_semana_corto", FORMAT ( [Date], "ddd" ),
+				        "cuatrimestre", "Q" & FORMAT ( [Date], "Q" ),
+				        "año_cuatrimestre", FORMAT ( [Date], "YYYY" ) & "/Q" & FORMAT ( [Date], "Q" )
+				    )
+
+	annotation PBI_Id = 10e9f4b60521433c9234a8b558e9804b
+

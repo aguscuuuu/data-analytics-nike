@@ -1,0 +1,47 @@
+table 'Tabla Medidas'
+	lineageTag: 51300d81-d308-4007-9e31-c91df6f271ce
+
+	measure 'Q Sales' = COUNT(Fact_Nike_Ventas[id_tipo_producto])
+		formatString: 0
+		lineageTag: afc1177b-1c08-42da-aba9-42235ab1a719
+
+	measure 'Q sales distinct' = DISTINCTCOUNT(Fact_Nike_Ventas[id_tipo_producto])
+		formatString: 0
+		lineageTag: a3188987-9fa2-4c22-9954-47d777e67bc1
+
+	measure 'Facturación total' = SUM(Fact_Nike_Ventas[total_vendido])
+		lineageTag: f9c78558-9af4-4f1d-ae77-cb062d937511
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cantidad de ventas' = COUNTROWS(Fact_Nike_Ventas)
+		formatString: 0
+		lineageTag: 37bcac13-26ce-4766-979e-630e12c94cc2
+
+	measure Rentabilidad = SUM(Fact_Nike_Ventas[beneficio])
+		lineageTag: 70381a38-711d-43aa-bd47-dff27a06d832
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Facturación promedio' = AVERAGE(Fact_Nike_Ventas[total_vendido])
+		lineageTag: 7c865d39-872f-4444-8799-a2f8c8b62f05
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: 1767e0db-1724-47bf-8f05-2bd91c71b438
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tabla Medidas' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 276e901c9fcb4377bef034f7af9a53c2
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

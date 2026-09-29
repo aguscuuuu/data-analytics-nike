@@ -1,0 +1,65 @@
+relationship AutoDetected_f1ec698a-d778-43e4-8477-2e02ba0d1a17
+	fromColumn: Fact_Nike_Ventas.id_nombre_producto
+	toColumn: Dim_Nombre_Producto.id_nombre_de_producto
+
+relationship AutoDetected_35378d1a-82e8-4f35-9452-8aed772198ec
+	fromColumn: Fact_Nike_Ventas.id_descripcion
+	toColumn: Dim_Descripcion.id_descripcion
+
+relationship AutoDetected_bb520e63-cb2d-494a-8fb3-763eb9b9f1a5
+	fromColumn: Fact_Nike_Ventas.id_color
+	toColumn: Dim_Color.id_color
+
+relationship AutoDetected_654c974d-f266-486f-b750-08ac803e2c12
+	fromColumn: Dim_Campaña.id_nombre_de_producto
+	toColumn: Dim_Nombre_Producto.id_nombre_de_producto
+
+relationship AutoDetected_d1dc3164-89c1-433f-a7fe-4d339018a104
+	fromColumn: Fact_Nike_Ventas.id_estado
+	toColumn: Dim_Sucursal_Estado.id_estado
+
+relationship AutoDetected_072874d7-a846-40fc-8ff7-5096ba024ca8
+	fromColumn: Dim_Estado.id_estado
+	toColumn: Dim_Sucursal_Estado.id_estado
+
+relationship b1fb8180-01d1-709e-56df-4819efa799ee
+	fromColumn: Fact_Nike_Ventas.id_tipo_producto
+	toColumn: Dim_Tipo_Producto.id_tipo_de_producto
+
+relationship 7553fc37-9230-2e66-d878-89ab65d8a5a1
+	fromColumn: Fact_Nike_Ventas.id_marca
+	toColumn: Dim_Marca.id_marca
+
+relationship b3eb74b5-a6ba-0a15-325c-0331a2938f63
+	fromColumn: Fact_Nike_Ventas.id_subcategoria
+	toColumn: Dim_Subcategoria.id_subcategoria
+
+relationship d34963fa-67f9-e87d-c232-3544ccb0d4e3
+	fromColumn: Fact_Nike_Ventas.id_categoria
+	toColumn: Dim_Categoria.id_categoria
+
+relationship 2d1da40d-ed77-d07a-c450-13dd92c4080a
+	fromColumn: Fact_Nike_Ventas.id_ciudad
+	toColumn: Dim_Ciudad.id_ciudad
+
+relationship 5ea832ce-b0f8-440b-10ac-b2b60ce6dd17
+	fromColumn: Fact_Nike_Ventas.id_disponibilidad
+	toColumn: Dim_Disponibilidad.id_disponibilidad
+
+relationship 07bf2857-a7a9-753a-b897-d581af4648b0
+	fromColumn: Fact_Nike_Ventas.id_region
+	toColumn: Dim_Region.id_region
+
+relationship 80862af7-eec1-b200-50d0-35f66498b224
+	fromColumn: Fact_Nike_Ventas.id_departamento
+	toColumn: Dim_Departamento.id_departamento
+
+relationship aaa58713-a3cf-48b7-90c5-4fdcbd731ba2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Tabla Calendario'.Date
+	toColumn: LocalDateTable_bdabee80-3114-43c9-82bc-3ccd311dea40.Date
+
+relationship 610f2056-8043-89aa-7187-2c3f03ecbb20
+	fromColumn: Fact_Nike_Ventas.fecha_factura
+	toColumn: 'Tabla Calendario'.Date
+

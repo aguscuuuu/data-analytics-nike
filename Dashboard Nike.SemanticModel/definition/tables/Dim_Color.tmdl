@@ -1,0 +1,39 @@
+table Dim_Color
+	lineageTag: e987224a-7172-4ace-9c24-20fae461ebde
+
+	column color
+		dataType: string
+		lineageTag: aa63b88d-02b5-41a9-8238-ef28efaa6560
+		summarizeBy: none
+		sourceColumn: color
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_color
+		dataType: int64
+		formatString: 0
+		lineageTag: 73cb7f1a-5cc9-4079-bbd0-4597e9416f99
+		summarizeBy: none
+		sourceColumn: id_color
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Color = m
+		mode: import
+		source =
+				let
+				  Origen = Excel.Workbook(File.Contents(RutaMaterial & "nike_data.xlsx"), null, true),
+				  #"Navegación 1" = Origen{[Item = "Color", Kind = "Sheet"]}[Data],
+				  #"Encabezados promovidos" = Table.PromoteHeaders(#"Navegación 1", [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"COLOR", type text}, {"id_COLOR", Int64.Type}}, "es"),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Tipo de columna cambiado",{"id_COLOR", "COLOR"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas reordenadas",{{"id_COLOR", "id_color"}, {"COLOR", "color"}})
+				in
+				  #"Columnas con nombre cambiado"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+
