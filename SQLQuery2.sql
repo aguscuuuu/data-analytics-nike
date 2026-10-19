@@ -230,7 +230,8 @@ FROM OPENROWSET(
   PricePerUnit, UnitsSold, CostoUnitario, OperatingMargin
 )
 SELECT
-  TRY_CONVERT(DATE, InvoiceDate, 101),
+  -- las fechas del JSON vienen como dd/mm/yyyy (estilo 103)
+  TRY_CONVERT(DATE, InvoiceDate, 103),
 
   id_Region, id_State, id_City,
   id_Department, id_Category, id_SubCategory,
@@ -269,7 +270,7 @@ WITH (
   CostoUnitario NVARCHAR(40) '$."Costo Unitario"',
   OperatingMargin NVARCHAR(40) '$."Operating Margin"'
 )
-WHERE TRY_CONVERT(DATE, InvoiceDate, 101) IS NOT NULL;
+WHERE TRY_CONVERT(DATE, InvoiceDate, 103) IS NOT NULL;
 GO
 
 --- verificar cargas
