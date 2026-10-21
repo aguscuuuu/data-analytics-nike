@@ -88,7 +88,8 @@ SELECT
     ISNULL(Department, 'Sin dato') AS Department
 FROM OPENJSON(@jsonDepartment)
 WITH (
-    Department    NVARCHAR(50) '$.Department',
+    -- la clave del JSON está en mayúsculas (OPENJSON distingue mayúsculas y minúsculas)
+    Department    NVARCHAR(50) '$.DEPARTMENT',
     id_DEPARTMENT INT          '$.id_DEPARTMENT'
 );
 
