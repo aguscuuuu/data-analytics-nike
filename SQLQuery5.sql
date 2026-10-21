@@ -1,21 +1,8 @@
-/* DIMENSIÓN CLIENTES (DimClient)
-
-El dataset de Nike no trae información de clientes, por lo que se genera una dimensión de
-clientes ficticios (minoristas que compran a Nike) a partir de las ubicaciones donde se
-registraron ventas. Cada cliente pertenece a una ciudad, un estado y una región, y cada
-venta se asigna a uno de los clientes de su misma ubicación.
-
-El script se puede volver a ejecutar: elimina la dimensión y la columna id_Client de la
-tabla de hechos si ya existen y las vuelve a crear (por ejemplo, después de recargar
-FactNikeSales). */
-
--- Poner en uso la base de datos
-
+-- poner en uso la base de datos
 USE BD_Nike;
 GO
 
--- LIMPIEZA PREVIA ------------------------------------------------------------------------------------------
-
+-- limpieza previa ------------------------------------------------------------------------------------------
 IF COL_LENGTH('dbo.FactNikeSales', 'id_Client') IS NOT NULL
 BEGIN
     IF OBJECT_ID('dbo.FK_Fact_Client', 'F') IS NOT NULL
@@ -30,34 +17,26 @@ END;
 DROP TABLE IF EXISTS dbo.DimClient;
 GO
 
--- CREAR LA TABLA DE DIMENSIÓN ------------------------------------------------------------------------------
-
+-- crear la tabla de dimensión ------------------------------------------------------------------------------
 CREATE TABLE dbo.DimClient (
-    id_Client INT PRIMARY KEY,
-    ClientName NVARCHAR(150) NOT NULL,
-    ClientType NVARCHAR(50) NOT NULL,
+    id_Client       INT             PRIMARY KEY,
+    ClientName      NVARCHAR(150)   NOT NULL,
+    ClientType      NVARCHAR(50)    NOT NULL,
 
     -- ubicación del cliente (fk)
-    id_Region INT NOT NULL,
-    id_State INT NOT NULL,
-    id_City INT NOT NULL,
+    id_Region       INT             NOT NULL,
+    id_State        INT             NOT NULL,
+    id_City         INT             NOT NULL,
 
     -- constraints
-    CONSTRAINT UQ_Client_Name UNIQUE (ClientName),
-    CONSTRAINT FK_Client_Region FOREIGN KEY (id_Region) REFERENCES dbo.DimRegion(id_Region),
-    CONSTRAINT FK_Client_State FOREIGN KEY (id_State) REFERENCES dbo.DimState(id_State),
-    CONSTRAINT FK_Client_City FOREIGN KEY (id_City) REFERENCES dbo.DimCity(id_City)
+    CONSTRAINT UQ_Client_Name   UNIQUE (ClientName),
+    CONSTRAINT FK_Client_Region FOREIGN KEY (id_Region)     REFERENCES dbo.DimRegion(id_Region),
+    CONSTRAINT FK_Client_State  FOREIGN KEY (id_State)      REFERENCES dbo.DimState(id_State),
+    CONSTRAINT FK_Client_City   FOREIGN KEY (id_City)       REFERENCES dbo.DimCity(id_City)
 );
 GO
 
--- CARGAR CLIENTES FICTICIOS --------------------------------------------------------------------------------
-
-/* Se toman las combinaciones región / estado / ciudad que existen en las ventas (hay ciudades
-con el mismo nombre en distintos estados, como Portland o Charleston, por eso la ubicación se
-define con las tres claves). Para cada ubicación se crean 3 clientes, combinando un nombre
-comercial ficticio con el nombre de la ciudad. Las ubicaciones se ordenan por ciudad para que
-dos ciudades homónimas queden contiguas y reciban nombres comerciales distintos. */
-
+-- cargar los clientes ficticios ----------------------------------------------------------------------------
 WITH Ubicaciones AS (
     SELECT DISTINCT
         f.id_Region,
@@ -107,14 +86,9 @@ INNER JOIN NombresComerciales n
     ON n.idNombre = (u.NroUbicacion % 3) * 3 + k.NroCliente - 1;
 GO
 
--- VINCULAR LA TABLA DE HECHOS ------------------------------------------------------------------------------
-
+-- vincular la tabla de hechos ------------------------------------------------------------------------------
 ALTER TABLE dbo.FactNikeSales ADD id_Client INT NULL;
 GO
-
-/* Cada venta se asigna a un cliente de su misma ubicación. Para que los clientes no tengan
-todos el mismo volumen, se reparte según SaleID: el 1° cliente recibe ~50% de las ventas,
-el 2° ~33% y el 3° ~17%. */
 
 UPDATE f
 SET f.id_Client = cl.id_Client
@@ -139,7 +113,7 @@ ALTER TABLE dbo.FactNikeSales
 CREATE INDEX IX_Fact_Client ON dbo.FactNikeSales (id_Client);
 GO
 
--- VERIFICAR CARGAS -----------------------------------------------------------------------------------------
+-- verificar cargas -----------------------------------------------------------------------------------------
 
 -- viendo la tabla de clientes
 SELECT
@@ -174,21 +148,3 @@ INNER JOIN dbo.DimClient cl
     ON f.id_Client = cl.id_Client
 GROUP BY cl.ClientName
 ORDER BY TotalVendido DESC;
-
--- CONSULTA DEL TRABAJO PRÁCTICO ----------------------------------------------------------------------------
-
-/* Extraer el nombre del cliente, la fecha de la compra y el total de la venta de las ventas
-realizadas en los últimos 30 días (contados desde la fecha de la última venta del dataset),
-ordenadas por fecha de compra descendente. */
-
-DECLARE @UltimaFecha DATE = (SELECT MAX(InvoiceDate) FROM dbo.FactNikeSales);
-
-SELECT
-    cl.ClientName AS Cliente,
-    v.InvoiceDate AS FechaCompra,
-    v.PricePerUnit * v.UnitsSold AS TotalVenta
-FROM dbo.FactNikeSales v
-INNER JOIN dbo.DimClient cl
-    ON v.id_Client = cl.id_Client
-WHERE v.InvoiceDate > DATEADD(DAY, -30, @UltimaFecha)
-ORDER BY v.InvoiceDate DESC;

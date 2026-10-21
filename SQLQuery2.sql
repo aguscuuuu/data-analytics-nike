@@ -275,12 +275,11 @@ GO
 
 --- verificar cargas
 
--- contando las filas 
-SELECT COUNT(*) AS FilasFact 
+-- verificar la carga de la tabla de ventas
+SELECT
+    COUNT(*) AS CantidadVentas,
+    MIN(InvoiceDate) AS PrimeraVenta,
+    MAX(InvoiceDate) AS UltimaVenta,
+    SUM(CASE WHEN InvoiceDate IS NULL THEN 1 ELSE 0 END) AS VentasSinFecha
 FROM dbo.FactNikeSales;
-
--- viendo la tabla Fact
-SELECT TOP 10 * 
-FROM dbo.FactNikeSales 
-ORDER BY SaleID DESC;
 
