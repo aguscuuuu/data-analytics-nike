@@ -1,35 +1,8 @@
 # Nike Sales Analytics — SQL Server + Power BI
 
-End-to-end **data analytics** project built on a Nike sales dataset for the United States (**229,471 transactions**, 2020–2024). The raw data is normalized into a **star schema** in **SQL Server**, loaded from JSON files with `OPENROWSET` + `OPENJSON`, explored through a progressive set of **T-SQL** practice queries (filters, aggregations, joins, CTEs, window functions) and finally visualized in an interactive **Power BI** dashboard.
+Final integrative project (*Proyecto Integrador Final*) of the **Data Analytics** course at [Coderhouse](https://www.coderhouse.com/). It solves a business case on a Nike sales dataset for the United States (**229,471 transactions**, January 2020 – December 2024): the raw data is modeled in **SQL Server**, loaded from JSON files with `OPENROWSET` + `OPENJSON`, explored through progressive **T-SQL** queries and finally communicated through a **Power BI** monthly sales report built with data storytelling principles.
 
-The repository contains everything needed to reproduce the pipeline: source datasets (Excel, CSV and JSON), the SQL scripts in execution order, the `.pbix` report, the multimedia assets used in the dashboard and a collection of Power BI color themes.
-
----
-
-## Table of contents
-
-- [Features](#features)
-- [Tech stack](#tech-stack)
-- [Repository structure](#repository-structure)
-- [Data model](#data-model)
-- [Datasets](#datasets)
-- [SQL scripts](#sql-scripts)
-- [Power BI dashboard](#power-bi-dashboard)
-- [Local installation](#local-installation)
-- [Status](#status)
-- [Author](#author)
-- [License](#license)
-
----
-
-## Features
-
-- **Dimensional modeling**: a central fact table (`FactNikeSales`) surrounded by 13 dimension tables, all linked with foreign key constraints.
-- **JSON ingestion** directly from SQL Server with `OPENROWSET(BULK ..., SINGLE_CLOB)` + `OPENJSON ... WITH (...)`, including date conversion of the invoice field.
-- **Load verification** queries after every ingestion step.
-- **SQL practice activities** covering relational / logical operators, `LIKE`, `IN`, `BETWEEN`, `CASE`, numeric formatting (`ROUND`, `CAST`, `FORMAT`), `GROUP BY` / `HAVING`, subqueries, CTEs, `INNER` / `LEFT` / `RIGHT JOIN`, `UNION` / `UNION ALL` and window functions (`ROW_NUMBER`, share-of-total calculations).
-- **Model extension**: a `DimClient` dimension with fictitious retail clients, assigned to each sale according to its location (idempotent script with prior cleanup and integrity checks).
-- **Interactive Power BI dashboard** with KPI cards (revenue, profitability, averages), custom navigation buttons (reset filters) and Nike / Jordan branding.
+The assignment instructions and the full written solution (theory questions, SQL exercise, ER diagram and dashboard explanation, with screenshots) are in [`Proyecto Integrador Final.pdf`](Proyecto%20Integrador%20Final.pdf). The repository also contains the source datasets (Excel, CSV and JSON), the SQL scripts in execution order, the `.pbix` report, the multimedia assets used in the dashboard and a collection of Power BI color themes.
 
 ---
 
@@ -40,7 +13,7 @@ The repository contains everything needed to reproduce the pipeline: source data
 | Database | Microsoft SQL Server |
 | Query language | T-SQL |
 | IDE | SQL Server Management Studio (SSMS) |
-| Visualization | Power BI Desktop |
+| Visualization | Power BI Desktop (Power Query + DAX) |
 | Data preparation | Microsoft Excel |
 | Data formats | JSON, XLSX, CSV |
 
@@ -50,35 +23,27 @@ The repository contains everything needed to reproduce the pipeline: source data
 
 ```
 data-analytics-nike/
-├── Dashboard.pbix              # Power BI report
-├── SQLQuery1.sql               # 1. Database + star schema (DDL)
-├── SQLQuery2.sql               # 2. Data load from JSON (OPENROWSET + OPENJSON)
-├── SQLQuery3.sql               # 3. Practice: operators, filters, formatting, GROUP BY
-├── SQLQuery4.sql               # 4. Practice: subqueries, CTEs, JOINs, UNION, window functions
-├── SQLQuery5.sql               # 5. Model extension: DimClient dimension
-├── SQLQuery6.sql               # 6. Final assignment query
-├── Dataset - Excel/            # Original workbook + campaigns + store images per state
-├── Dataset - JSON/             # One JSON file per table (13 dimensions + fact table)
-├── Multimedia/                 # Logos, icons, KPI images and GIFs used in the dashboard
-└── Temas/                      # Power BI JSON color themes
+├── Proyecto Integrador Final.pdf   # Assignment instructions + written solution
+├── Dashboard.pbix                  # Power BI report
+├── SQLQuery1.sql                   # 1. Database + star schema (DDL)
+├── SQLQuery2.sql                   # 2. Data load from JSON (OPENROWSET + OPENJSON)
+├── SQLQuery3.sql                   # 3. Practice: operators, filters, formatting, GROUP BY
+├── SQLQuery4.sql                   # 4. Practice: subqueries, CTEs, JOINs, UNION, window functions
+├── SQLQuery5.sql                   # 5. Model extension: DimClient dimension
+├── SQLQuery6.sql                   # 6. Final assignment query
+├── Dataset - Excel/                # Original workbook + campaigns + store images per state
+├── Dataset - JSON/                 # One JSON file per table (dimensions + fact table)
+├── Multimedia/                     # Logos, icons, KPI images and GIFs used in the dashboard
+└── Temas/                          # Power BI JSON color themes
 ```
 
 ---
 
 ## Data model
 
-**Star schema** in the `BD_Nike` database:
+The `BD_Nike` database is organized as a **star schema**. At its center is the fact table `FactNikeSales`, with one row per sale storing the invoice date, size, unit price, units sold, unit cost and operating margin, plus the foreign keys that link it to the dimension tables. The **product** is not a single table but is split into several dimensions (name, description, category, sub-category, product type, brand, color, department and availability), which avoids repeating text in every sale and allows filtering the analysis by any attribute. The **location** of each sale is described by `DimRegion`, `DimState` and `DimCity`. Every relationship is one-to-many and enforced with foreign key constraints.
 
-```
-                     DimCategory   DimSubCategory   DimProductType
-                            \            |            /
-   DimDepartment ──┐         \           |           /        ┌── DimBrand
-   DimProductName ─┤          ┌──────────────────────┐        ├── DimColor
-   DimDescription ─┼──────────│    FactNikeSales     │────────┼── DimAvailability
-                   │          └──────────────────────┘        │
-                   │            /        |         \          │
-                 DimClient  DimRegion  DimState  DimCity ─────┘
-```
+Since the original dataset has no customer information, a `DimClient` dimension was **derived** for the final assignment: 162 fictitious retailers (three per each of the 54 sale locations, e.g. *Peak Performance Albany*), each assigned to the sales of its same region, state and city with an uneven split (~50 / 33 / 17 %) so client volumes differ as they would in reality. In Power BI the model is completed with a DAX **calendar table**, the campaigns per product (`Campaña.xlsx`) and the store images per state (`Sucursales_Estados.csv`).
 
 ### Fact table — `dbo.FactNikeSales`
 
@@ -127,43 +92,31 @@ data-analytics-nike/
 
 ## SQL scripts
 
-Run them **in order** — each script depends on the previous one.
+Run them **in order** — each script depends on the previous one. Scripts 1 to 4 were developed during the course classes; scripts 5 and 6 (and the date fix in script 2) belong to the final assignment.
 
 | # | Script | Purpose |
 | --- | --- | --- |
 | 1 | `SQLQuery1.sql` | Creates the `BD_Nike` database, the 12 base dimension tables and `FactNikeSales` with all its foreign keys. |
-| 2 | `SQLQuery2.sql` | Loads every JSON file into its table using `OPENROWSET` + `OPENJSON`, then verifies the load. |
+| 2 | `SQLQuery2.sql` | Loads every JSON file into its table using `OPENROWSET` + `OPENJSON`. Cleans the data on the way: renames columns with spaces, replaces decimal commas with `REPLACE` + `TRY_CONVERT` and parses `INVOICE DATE` as `dd/mm/yyyy` (style `103`). The original style `101` swapped day and month and dropped most rows (90,270 instead of 229,471). Ends with a verification query. |
 | 3 | `SQLQuery3.sql` | Practice activity: relational and logical operators, `LIKE` patterns, `IN`, `BETWEEN`, `CASE`, arithmetic, `ROUND` / `CAST` / `FORMAT`, `ORDER BY`, `TOP`, `GROUP BY`, `HAVING`. |
 | 4 | `SQLQuery4.sql` | Practice activity: scalar subqueries and `ISNULL`, CTE refactoring, `INNER` / `LEFT` / `RIGHT JOIN`, regional consolidation with `UNION`, ranking per city and size share with window functions. |
-| 5 | `SQLQuery5.sql` | Creates `DimClient`, generates fictitious clients per location, links them to the fact table (`id_Client` FK + index) and runs integrity checks. Safe to re-run. |
-| 6 | `SQLQuery6.sql` | Final query: sales per client in the last 30 days of available data. |
-
-### Query example
-
-```sql
--- top products by operating margin in each city
-SELECT
-    c.City AS Sucursal,
-    np.ProductName AS Productos,
-    v.OperatingMargin AS Margen_Operativo,
-    ROW_NUMBER() OVER (PARTITION BY c.City ORDER BY v.OperatingMargin DESC) AS Ranking_Margen
-FROM dbo.FactNikeSales v
-INNER JOIN dbo.DimCity c
-    ON v.id_City = c.id_City
-INNER JOIN dbo.DimProductName np
-    ON v.id_PRODUCT_NAME = np.id_PRODUCT_NAME;
-```
+| 5 | `SQLQuery5.sql` | Creates `DimClient` with CTEs + `CROSS JOIN`, links it to the fact table (`id_Client` FK + index) and runs integrity checks. Idempotent: it cleans up a previous run before starting. |
+| 6 | `SQLQuery6.sql` | Final query: client name, purchase date and sale total for the last 30 days of available data (computed from `MAX(InvoiceDate)`), ordered by date descending. Returns 3,682 sales from December 2024. |
 
 ---
 
 ## Power BI dashboard
 
-`Dashboard.pbix` connects to the `BD_Nike` model and presents:
+`Dashboard.pbix` is a **monthly sales report for a marketing team**, designed as a story that goes from the general picture to the detail and ends with a recommendation. Every chart title states its conclusion, so the report can be understood by reading the titles alone. For December 2024 it includes:
 
-- **KPI cards**: total revenue, total and average profitability, average revenue and units sold.
-- **Slicers and cross-filtering** by region, state, city, department, category, brand and date.
-- **Custom navigation** with reset-filter buttons.
-- **Branding** with Nike / Jordan logos, animated GIFs and store images per state.
+- **Headline**: *"December 2024 was the best December of the last five years"*.
+- **Slicers** for period, region, product and client, to repeat the analysis on any month or market.
+- **KPI cards**: revenue ($85.8M), change vs. previous month (+0.7%) and vs. previous year (+12.8%), margin (54.7%) and active clients (162 vs. 135).
+- **Line chart** of monthly revenue, with 2024 highlighted against previous years (Q4 recovery after the September drop).
+- **Grouped bar chart** by region, year-over-year (West +59.7%; Northeast and South down).
+- **Bar charts** by category (footwear explains 59% of revenue) and by department (men account for 6 of every 10 dollars).
+- **Top 5 clients table** (together under 10% of monthly revenue).
+- **Proposal box**: replicate the West's commercial actions in the Northeast and South, and reinforce footwear.
 
 Visual assets live in `Multimedia/`, and alternative color palettes can be imported from `Temas/` via *View → Themes → Browse for themes* in Power BI Desktop.
 
