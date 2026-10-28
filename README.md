@@ -171,7 +171,7 @@ This work has been dedicated to the public domain under the **Creative Commons C
 > The dataset is used for educational purposes only. Nike, Jordan and related marks belong to their respective owners.
 
 ```
-Mady by...
+Made by...
                                 _          
                                | |         
    ___ _   _  ___  ___ ___   __| | ___     
