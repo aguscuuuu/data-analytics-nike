@@ -2,7 +2,7 @@
 
 Final integrative project (*Proyecto Integrador Final*) of the **Data Analytics** course at [Coderhouse](https://www.coderhouse.com/). It solves a business case on a Nike sales dataset for the United States (**229,471 transactions**, January 2020 – December 2024): the raw data is modeled in **SQL Server**, loaded from JSON files with `OPENROWSET` + `OPENJSON`, explored through progressive **T-SQL** queries and finally communicated through a **Power BI** monthly sales report built with data storytelling principles.
 
-The assignment instructions and the full written solution (theory questions, SQL exercise, ER diagram and dashboard explanation, with screenshots) are in [`Proyecto Integrador Final.pdf`](Proyecto%20Integrador%20Final.pdf). The repository also contains the source datasets (Excel, CSV and JSON), the SQL scripts in execution order, the `.pbix` report, the multimedia assets used in the dashboard and a collection of Power BI color themes.
+The assignment instructions and the full written solution (theory questions, SQL exercise, ER diagram and dashboard explanation, with screenshots) are in [`Proyecto Integrador Final.pdf`](Proyecto%20Integrador%20Final.pdf). The repository also contains the source datasets (Excel, CSV and JSON), the SQL scripts in execution order, the `.pbix` report and a collection of Power BI color themes.
 
 ---
 
@@ -33,7 +33,6 @@ data-analytics-nike/
 ├── SQLQuery6.sql                   # 6. Final assignment query
 ├── Dataset - Excel/                # Original workbook + campaigns + store images per state
 ├── Dataset - JSON/                 # One JSON file per table (dimensions + fact table)
-├── Multimedia/                     # Logos, icons, KPI images and GIFs used in the dashboard
 └── Temas/                          # Power BI JSON color themes
 ```
 
@@ -118,7 +117,7 @@ Run them **in order** — each script depends on the previous one. Scripts 1 to 
 - **Top 5 clients table** (together under 10% of monthly revenue).
 - **Proposal box**: replicate the West's commercial actions in the Northeast and South, and reinforce footwear.
 
-Visual assets live in `Multimedia/`, and alternative color palettes can be imported from `Temas/` via *View → Themes → Browse for themes* in Power BI Desktop.
+Alternative color palettes can be imported from `Temas/` via *View → Themes → Browse for themes* in Power BI Desktop.
 
 ---
 
@@ -171,7 +170,7 @@ This work has been dedicated to the public domain under the **Creative Commons C
 
 > The dataset is used for educational purposes only. Nike, Jordan and related marks belong to their respective owners.
 
-**© 2026 cueCode Software.**
+**Made by...**
 
 ```
                                    ______          __
